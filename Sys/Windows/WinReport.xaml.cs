@@ -962,10 +962,13 @@ namespace Sys.Windows
                 if (inactivesub.IsChecked == true) sb = db.Subjects.Where(r => r.Статус == false).OrderBy(r => r.Наименование_предмета);
 
                 if (sb.FirstOrDefault() != null)
+                {
                     foreach (Subjects r in sb)
                     {
                         Subject_ComboBox.Items.Add(r.Наименование_предмета);
                     }
+                    Subject_ComboBox.SelectedIndex = 0;
+                }
             }
         }
 
