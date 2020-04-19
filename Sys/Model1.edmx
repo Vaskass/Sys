@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище SysModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Enabled_Subjects">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID_Пользователя" Type="int" />
+          <Property Name="ID_Группы" Type="int" />
+          <Property Name="ID_Предмета" Type="int" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="ID_Группы" />
+          </Key>
+          <Property Name="ID_Группы" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название группы" Type="varchar" MaxLength="50" />
+          <Property Name="Год поступления" Type="int" />
+          <Property Name="Статус" Type="bit" />
+          <Property Name="ID_Пользователя" Type="int" />
+        </EntityType>
+        <EntityType Name="Skips">
+          <Key>
+            <PropertyRef Name="ID_Записи" />
+          </Key>
+          <Property Name="ID_Записи" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Студента" Type="int" />
+          <Property Name="Дата" Type="date" />
+          <Property Name="ID_Пользователя" Type="int" />
+          <Property Name="ID_Предмета" Type="int" />
+          <Property Name="Номер пары" Type="int" />
+          <Property Name="Комментарий" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="ID_Студента" />
+          </Key>
+          <Property Name="ID_Студента" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Имя" Type="varchar" MaxLength="128" />
+          <Property Name="Фамилия" Type="varchar" MaxLength="128" />
+          <Property Name="Отчество" Type="varchar" MaxLength="128" />
+          <Property Name="ID_Группы" Type="int" />
+          <Property Name="Статус" Type="bit" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="ID_Предмета" />
+          </Key>
+          <Property Name="ID_Предмета" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Наименование предмета" Type="varchar" MaxLength="128" />
+          <Property Name="Статус" Type="bit" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID_Пользователя" />
+          </Key>
+          <Property Name="ID_Пользователя" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Фамилия" Type="varchar" MaxLength="128" />
+          <Property Name="Имя" Type="varchar" MaxLength="128" />
+          <Property Name="Отчество" Type="varchar" MaxLength="128" />
+          <Property Name="Логин" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Пароль" Type="varchar" MaxLength="128" />
+          <Property Name="Должность" Type="varchar" MaxLength="128" />
+          <Property Name="Статус" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Enabled_Subjects_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Enabled_Subjects" Type="Self.Enabled_Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="ID_Группы" />
+            </Principal>
+            <Dependent Role="Enabled_Subjects">
+              <PropertyRef Name="ID_Группы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enabled_Subjects_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="Enabled_Subjects" Type="Self.Enabled_Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="ID_Предмета" />
+            </Principal>
+            <Dependent Role="Enabled_Subjects">
+              <PropertyRef Name="ID_Предмета" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enabled_Subjects_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Enabled_Subjects" Type="Self.Enabled_Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_Пользователя" />
+            </Principal>
+            <Dependent Role="Enabled_Subjects">
+              <PropertyRef Name="ID_Пользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skips_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="Skips" Type="Self.Skips" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="ID_Студента" />
+            </Principal>
+            <Dependent Role="Skips">
+              <PropertyRef Name="ID_Студента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skips_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="Skips" Type="Self.Skips" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="ID_Предмета" />
+            </Principal>
+            <Dependent Role="Skips">
+              <PropertyRef Name="ID_Предмета" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Students_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="ID_Группы" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="ID_Группы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище SysModelContainer">
+          <EntitySet Name="Enabled_Subjects" EntityType="Self.Enabled_Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Skips" EntityType="Self.Skips" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Enabled_Subjects_Groups" Association="Self.FK_Enabled_Subjects_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Enabled_Subjects" EntitySet="Enabled_Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enabled_Subjects_Subjects" Association="Self.FK_Enabled_Subjects_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Enabled_Subjects" EntitySet="Enabled_Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enabled_Subjects_Users" Association="Self.FK_Enabled_Subjects_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Enabled_Subjects" EntitySet="Enabled_Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skips_Students" Association="Self.FK_Skips_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Skips" EntitySet="Skips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skips_Subjects" Association="Self.FK_Skips_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Skips" EntitySet="Skips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Students_Groups" Association="Self.FK_Students_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SysModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="ID_Группы" />
+          </Key>
+          <Property Name="ID_Группы" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название_группы" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Год_поступления" Type="Int32" />
+          <Property Name="Статус" Type="Boolean" />
+          <Property Name="ID_Пользователя" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Groups_Users" FromRole="Groups" ToRole="Users" />
+          <NavigationProperty Name="Students" Relationship="Self.FK_Students_Groups" FromRole="Groups" ToRole="Students" />
+          <NavigationProperty Name="Enabled_Subjects" Relationship="SysModel.FK_Enabled_Subjects_Groups" FromRole="Groups" ToRole="Enabled_Subjects" />
+        </EntityType>
+        <EntityType Name="Skips">
+          <Key>
+            <PropertyRef Name="ID_Записи" />
+          </Key>
+          <Property Name="ID_Записи" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Студента" Type="Int32" />
+          <Property Name="Дата" Type="DateTime" Precision="0" />
+          <Property Name="ID_Пользователя" Type="Int32" />
+          <Property Name="ID_Предмета" Type="Int32" />
+          <Property Name="Номер_пары" Type="Int32" />
+          <Property Name="Комментарий" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Students" Relationship="Self.FK_Skips_Students" FromRole="Skips" ToRole="Students" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK_Skips_Subjects" FromRole="Skips" ToRole="Subjects" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Skips_Users" FromRole="Skips" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="ID_Студента" />
+          </Key>
+          <Property Name="ID_Студента" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Имя" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Фамилия" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Отчество" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Группы" Type="Int32" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK_Students_Groups" FromRole="Students" ToRole="Groups" />
+          <NavigationProperty Name="Skips" Relationship="Self.FK_Skips_Students" FromRole="Students" ToRole="Skips" />
+          <Property Name="Статус" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="ID_Предмета" />
+          </Key>
+          <Property Name="ID_Предмета" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Наименование_предмета" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Skips" Relationship="Self.FK_Skips_Subjects" FromRole="Subjects" ToRole="Skips" />
+          <NavigationProperty Name="Enabled_Subjects" Relationship="SysModel.FK_Enabled_Subjects_Subjects" FromRole="Subjects" ToRole="Enabled_Subjects" />
+          <Property Name="Статус" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID_Пользователя" />
+          </Key>
+          <Property Name="ID_Пользователя" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Фамилия" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Имя" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Отчество" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Логин" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Пароль" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Должность" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK_Groups_Users" FromRole="Users" ToRole="Groups" />
+          <NavigationProperty Name="Skips" Relationship="Self.FK_Skips_Users" FromRole="Users" ToRole="Skips" />
+          <NavigationProperty Name="Enabled_Subjects" Relationship="SysModel.FK_Enabled_Subjects_Users" FromRole="Users" ToRole="Enabled_Subjects" />
+          <Property Name="Статус" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_Groups_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_Пользователя" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="ID_Пользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Students_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="ID_Группы" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="ID_Группы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skips_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="Skips" Type="Self.Skips" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="ID_Студента" />
+            </Principal>
+            <Dependent Role="Skips">
+              <PropertyRef Name="ID_Студента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skips_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="Skips" Type="Self.Skips" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="ID_Предмета" />
+            </Principal>
+            <Dependent Role="Skips">
+              <PropertyRef Name="ID_Предмета" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skips_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Skips" Type="Self.Skips" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_Пользователя" />
+            </Principal>
+            <Dependent Role="Skips">
+              <PropertyRef Name="ID_Пользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SysItems" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Groups" EntityType="Self.Groups" />
+          <EntitySet Name="Skips" EntityType="Self.Skips" />
+          <EntitySet Name="Students" EntityType="Self.Students" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Groups_Users" Association="Self.FK_Groups_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Students_Groups" Association="Self.FK_Students_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skips_Students" Association="Self.FK_Skips_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Skips" EntitySet="Skips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skips_Subjects" Association="Self.FK_Skips_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Skips" EntitySet="Skips" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skips_Users" Association="Self.FK_Skips_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Skips" EntitySet="Skips" />
+          </AssociationSet>
+          <EntitySet Name="Enabled_Subjects" EntityType="SysModel.Enabled_Subjects" />
+          <AssociationSet Name="FK_Enabled_Subjects_Groups" Association="SysModel.FK_Enabled_Subjects_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Enabled_Subjects" EntitySet="Enabled_Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enabled_Subjects_Subjects" Association="SysModel.FK_Enabled_Subjects_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Enabled_Subjects" EntitySet="Enabled_Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enabled_Subjects_Users" Association="SysModel.FK_Enabled_Subjects_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Enabled_Subjects" EntitySet="Enabled_Subjects" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Enabled_Subjects">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID_Пользователя" Type="Int32" />
+          <Property Name="ID_Группы" Type="Int32" />
+          <Property Name="ID_Предмета" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Groups" Relationship="SysModel.FK_Enabled_Subjects_Groups" FromRole="Enabled_Subjects" ToRole="Groups" />
+          <NavigationProperty Name="Subjects" Relationship="SysModel.FK_Enabled_Subjects_Subjects" FromRole="Enabled_Subjects" ToRole="Subjects" />
+          <NavigationProperty Name="Users" Relationship="SysModel.FK_Enabled_Subjects_Users" FromRole="Enabled_Subjects" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_Enabled_Subjects_Groups">
+          <End Type="SysModel.Groups" Role="Groups" Multiplicity="0..1" />
+          <End Type="SysModel.Enabled_Subjects" Role="Enabled_Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="ID_Группы" />
+            </Principal>
+            <Dependent Role="Enabled_Subjects">
+              <PropertyRef Name="ID_Группы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enabled_Subjects_Subjects">
+          <End Type="SysModel.Subjects" Role="Subjects" Multiplicity="0..1" />
+          <End Type="SysModel.Enabled_Subjects" Role="Enabled_Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="ID_Предмета" />
+            </Principal>
+            <Dependent Role="Enabled_Subjects">
+              <PropertyRef Name="ID_Предмета" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enabled_Subjects_Users">
+          <End Type="SysModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="SysModel.Enabled_Subjects" Role="Enabled_Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_Пользователя" />
+            </Principal>
+            <Dependent Role="Enabled_Subjects">
+              <PropertyRef Name="ID_Пользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище SysModelContainer" CdmEntityContainer="SysItems">
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="SysModel.Groups">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="ID_Группы" ColumnName="ID_Группы" />
+                <ScalarProperty Name="Название_группы" ColumnName="Название группы" />
+                <ScalarProperty Name="Год_поступления" ColumnName="Год поступления" />
+                <ScalarProperty Name="Статус" ColumnName="Статус" />
+                <ScalarProperty Name="ID_Пользователя" ColumnName="ID_Пользователя" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skips">
+            <EntityTypeMapping TypeName="SysModel.Skips">
+              <MappingFragment StoreEntitySet="Skips">
+                <ScalarProperty Name="ID_Записи" ColumnName="ID_Записи" />
+                <ScalarProperty Name="ID_Студента" ColumnName="ID_Студента" />
+                <ScalarProperty Name="Дата" ColumnName="Дата" />
+                <ScalarProperty Name="ID_Пользователя" ColumnName="ID_Пользователя" />
+                <ScalarProperty Name="ID_Предмета" ColumnName="ID_Предмета" />
+                <ScalarProperty Name="Номер_пары" ColumnName="Номер пары" />
+                <ScalarProperty Name="Комментарий" ColumnName="Комментарий" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="SysModel.Students">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="Статус" ColumnName="Статус" />
+                <ScalarProperty Name="ID_Студента" ColumnName="ID_Студента" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="ID_Группы" ColumnName="ID_Группы" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="SysModel.Subjects">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="Статус" ColumnName="Статус" />
+                <ScalarProperty Name="ID_Предмета" ColumnName="ID_Предмета" />
+                <ScalarProperty Name="Наименование_предмета" ColumnName="Наименование предмета" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SysModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Статус" ColumnName="Статус" />
+                <ScalarProperty Name="ID_Пользователя" ColumnName="ID_Пользователя" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+                <ScalarProperty Name="Должность" ColumnName="Должность" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enabled_Subjects">
+            <EntityTypeMapping TypeName="SysModel.Enabled_Subjects">
+              <MappingFragment StoreEntitySet="Enabled_Subjects">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Предмета" ColumnName="ID_Предмета" />
+                <ScalarProperty Name="ID_Группы" ColumnName="ID_Группы" />
+                <ScalarProperty Name="ID_Пользователя" ColumnName="ID_Пользователя" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
