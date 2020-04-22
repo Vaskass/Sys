@@ -208,12 +208,12 @@ namespace Sys.Windows
                     grupHeadBox.Items.Add(usersList.LastOrDefault().Логин);
                 }
             }
-
         }
 
         private void positionBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            enabledSubjectsGroup.IsEnabled = positionBox.SelectedIndex == 0 && positionBox.IsEnabled;
+            if (okUserButton != null)
+                enabledSubjectsGroup.IsEnabled = positionBox.SelectedIndex == 0 && positionBox.IsEnabled && okUserButton.Content.ToString() != "Добавить";
         }
 
         private void UsersBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -298,14 +298,15 @@ namespace Sys.Windows
 
         private void positionBox_SelectionChange(object sender, DependencyPropertyChangedEventArgs e)
         {
-            enabledSubjectsGroup.IsEnabled = positionBox.SelectedIndex == 0 && positionBox.IsEnabled;
+            if (okUserButton != null)
+                enabledSubjectsGroup.IsEnabled = positionBox.SelectedIndex == 0 && positionBox.IsEnabled && okUserButton.Content.ToString() != "Добавить";
         }
 
         private void addUserButton_Click(object sender, RoutedEventArgs e)
         {
             clearUserGroup();
-            userGroup.IsEnabled = true;
             okUserButton.Content = "Добавить";
+            userGroup.IsEnabled = true;
             editUserButton.IsEnabled = false;
         }
 
@@ -592,7 +593,17 @@ namespace Sys.Windows
                     studentNameText.Text = selectedStudent.Имя;
                     studentSurnameText.Text = selectedStudent.Фамилия;
                     studentPatronymicText.Text = selectedStudent.Отчество;
-                    studentGroupBox.SelectedItem = groupsList.Find(p => p.ID_Группы == selectedStudent.ID_Группы).Название_группы;
+                    var s = groupsList.Find(p => p.ID_Группы == selectedStudent.ID_Группы);
+                    if(s!=null)
+                    studentGroupBox.SelectedItem = s.Название_группы;
+                    else
+                    {
+                        if (MessageBox.Show("Данная группа удалена, включить отображение удалённых групп?", "???", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.Yes)
+                        {
+                            deletedGroupsShow.IsChecked = true;
+                            studentsBox_SelectionChanged(null, null);
+                        }
+                    }
                 }
 
                 if (selectedStudent.Статус == false)
@@ -713,7 +724,17 @@ namespace Sys.Windows
                 {
                     grupNameText.Text = selectedGrup.Название_группы;
                     grupYearText.Text = selectedGrup.Год_поступления.ToString();
-                    grupHeadBox.SelectedItem = usersList.Find(p => p.ID_Пользователя == selectedGrup.ID_Пользователя).Логин;
+                    var s = usersList.Find(p => p.ID_Пользователя == selectedGrup.ID_Пользователя);
+                    if (s != null)
+                        grupHeadBox.SelectedItem = s.Логин;
+                    else
+                    {
+                        if (MessageBox.Show("Данный руководитель удалён, включить отображение удалённых пользоватлей?","???",MessageBoxButton.YesNo,MessageBoxImage.Warning,MessageBoxResult.No) == MessageBoxResult.Yes)
+                        {
+                            deletedUsersShow.IsChecked = true;
+                            groupsBox_SelectionChanged(null, null);
+                        }
+                    }
                 }
 
                 if (selectedGrup.Статус == false)
@@ -820,6 +841,21 @@ namespace Sys.Windows
         private void grupYearText_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void userGroup_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+
+        private void enabledSubjectsGroup_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (enabledSubjectBox != null)
+            {
+                subjectBox.SelectedIndex = -1;
+                groupBox.SelectedIndex = -1;
+                enabledSubjectBox.Items.Clear();
+            }
         }
     }
 }
