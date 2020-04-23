@@ -125,7 +125,7 @@ namespace Sys.Windows
 
         private void WinReportButton_Click(object sender, RoutedEventArgs e)
         {
-            new WinReport(1, currentUser).Show();
+            new WinReport(1, currentUser).ShowDialog();
         }
 
         private void Window_Initialized(object sender, EventArgs e)
