@@ -64,9 +64,7 @@ namespace Sys.Windows
                     int j = subjectss[i];
                     var sub = db.Subjects.Where(r => r.ID_Предмета == j);
                     foreach (Subjects r in sub) { if (!enabledSubjectsBox.Items.Contains(r.Наименование_предмета)) enabledSubjectsBox.Items.Add(r.Наименование_предмета); break; }
-
                 }
-
             }
         }
 

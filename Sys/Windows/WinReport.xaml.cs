@@ -138,11 +138,6 @@ namespace Sys.Windows
         }
 
 
-
-
-
-
-
         List<groupsk> GroupSkips = new List<groupsk>();
         List<studentsk> StudentSkips = new List<studentsk>();
         List<collegesk> CollegeSkips = new List<collegesk>();
@@ -152,9 +147,6 @@ namespace Sys.Windows
         Subjects currentSubject = new Subjects();
         Users currentUser = new Users();
         Groups currentGroupTeacher = new Groups();
-
-
-
 
         private void ShowGroupSkips()
         {
@@ -210,12 +202,6 @@ namespace Sys.Windows
             }
         }
 
-
-
-
-
-
-
         private void ShowStudentSkips()
         {
             int num = 0;
@@ -263,9 +249,6 @@ namespace Sys.Windows
                 }
             }
         }
-
-
-
 
         private void ShowCollegeSkips()
         {
@@ -401,10 +384,10 @@ namespace Sys.Windows
         {
             using (SysItems db = new SysItems())
             {
-                if (Subject_ComboBox.Items.Count>0)
+                if (Subject_ComboBox.Items.Count>0&& Subject_ComboBox.SelectedItem!=null )
                 {
                     var st = db.Subjects.Where(r => r.Наименование_предмета == Subject_ComboBox.SelectedItem.ToString());
-                    if (st.FirstOrDefault() != null)
+                   if (st.FirstOrDefault() != null)
                         currentSubject = st.FirstOrDefault();
                 }
             }
@@ -679,7 +662,7 @@ namespace Sys.Windows
         {
             using (SysItems db = new SysItems())
             {
-                if (Subjects_ComboBox.Items.Count > 0)
+                if (Subjects_ComboBox.Items.Count > 0 && Subjects_ComboBox.SelectedItem!=null)
                 {
                     var st = db.Subjects.Where(r => r.Наименование_предмета == Subjects_ComboBox.SelectedItem.ToString());
 
@@ -767,10 +750,7 @@ namespace Sys.Windows
                             StudentSkips.Add(AddSkip);
                         }
                     }
-
                     createExcelTable(1);
-
-
                 }
             }
         }
@@ -924,7 +904,6 @@ namespace Sys.Windows
                 range = sheet.get_Range("A" + 1, "D" + Gnum);
 
                 //sheet.Rows.WrapText = true;
-
 
                 range.EntireColumn.AutoFit();
                 range.EntireRow.AutoFit();

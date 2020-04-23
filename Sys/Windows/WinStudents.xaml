@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Название группы" Height="450" Width="860" SizeChanged="Window_SizeChanged">
     <Grid >
-        <DataGrid Initialized="Grid_Initialized" x:Name="StudTable" Margin="0,0,0,40"  LoadingRow="StudTable_LoadingRow" MinRowHeight="3">
+        <DataGrid Initialized="Grid_Initialized" x:Name="StudTable" Margin="0,0,0,40"  LoadingRow="StudTable_LoadingRow">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
                     <Setter Property="Background" Value="White"/>
@@ -19,7 +19,6 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-
             </DataGrid.ItemContainerStyle>
         </DataGrid>
         <Button x:Name="SaveButton" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="150" Height="20" Click="Save" Margin="0,0,-0.2,5" Style="{StaticResource Button_Style_1}"/>
