@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Sys.Windows

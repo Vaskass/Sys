@@ -594,8 +594,8 @@ namespace Sys.Windows
                     studentSurnameText.Text = selectedStudent.Фамилия;
                     studentPatronymicText.Text = selectedStudent.Отчество;
                     var s = groupsList.Find(p => p.ID_Группы == selectedStudent.ID_Группы);
-                    if(s!=null)
-                    studentGroupBox.SelectedItem = s.Название_группы;
+                    if (s != null)
+                        studentGroupBox.SelectedItem = s.Название_группы;
                     else
                     {
                         if (MessageBox.Show("Данная группа удалена, включить отображение удалённых групп?", "???", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.Yes)
@@ -619,27 +619,28 @@ namespace Sys.Windows
 
         private void okStudentButton_Click(object sender, RoutedEventArgs e)
         {
-            if (okStudentButton.Content.ToString() == "Изменить")
+            if (studentGroupBox.SelectedItem != null)
             {
-                if (studentsBox.SelectedItem != null)
+                if (okStudentButton.Content.ToString() == "Изменить")
                 {
-                    int selectedStudentID = studentsList[studentsBox.SelectedIndex].ID_Студента;
-                    Students u = SI.Students.Find(selectedStudentID); ;
-                    u.Имя = studentNameText.Text;
-                    u.Фамилия = studentSurnameText.Text;
-                    u.Отчество = studentPatronymicText.Text;
-                    u.ID_Группы = groupsList[studentGroupBox.SelectedIndex].ID_Группы;
+                    if (studentsBox.SelectedItem != null)
+                    {
+                        int selectedStudentID = studentsList[studentsBox.SelectedIndex].ID_Студента;
+                        Students u = SI.Students.Find(selectedStudentID); ;
+                        u.Имя = studentNameText.Text;
+                        u.Фамилия = studentSurnameText.Text;
+                        u.Отчество = studentPatronymicText.Text;
+                        u.ID_Группы = groupsList[studentGroupBox.SelectedIndex].ID_Группы;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Выберите пльзователя для именения");
+                        return;
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Выберите пльзователя для именения");
-                    return;
-                }
-            }
-            else
-            {
-                if (studentGroupBox.SelectedItem != null)
-                {
+
                     Students newStudent = new Students
                     {
                         Имя = studentNameText.Text,
@@ -650,11 +651,11 @@ namespace Sys.Windows
                     };
                     SI.Students.Add(newStudent);
                 }
-                else
-                {
-                    MessageBox.Show("Выберите группу");
-                    return;
-                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите группу");
+                return;
             }
             SI.SaveChanges();
             refreshStudentsBox();
@@ -729,7 +730,7 @@ namespace Sys.Windows
                         grupHeadBox.SelectedItem = s.Логин;
                     else
                     {
-                        if (MessageBox.Show("Данный руководитель удалён, включить отображение удалённых пользоватлей?","???",MessageBoxButton.YesNo,MessageBoxImage.Warning,MessageBoxResult.No) == MessageBoxResult.Yes)
+                        if (MessageBox.Show("Данный руководитель удалён, включить отображение удалённых пользоватлей?", "???", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.Yes)
                         {
                             deletedUsersShow.IsChecked = true;
                             groupsBox_SelectionChanged(null, null);
@@ -787,6 +788,12 @@ namespace Sys.Windows
 
             if (okGrupButton.Content.ToString() == "Изменить")
             {
+                if (grupHeadBox.SelectedItem == null)
+                {
+                    MessageBox.Show("Выберите классного руководителя");
+                    return;
+                }
+                else
                 if (groupsBox.SelectedItem != null)
                 {
                     int selectedGrupID = groupsList[groupsBox.SelectedIndex].ID_Группы;
