@@ -89,9 +89,9 @@ namespace Sys.Windows
             {
                 var gr = db.Groups.Where(r => r.Статус == true);
                 var tc = db.Groups.Where(r => r.ID_Пользователя == user.ID_Пользователя);
-                //var sb = db.Subjects;
+                var sb = db.Subjects;
                 foreach (Groups r in gr) { Group_ComboBox.Items.Add(r.Название_группы); }
-                //foreach (Subjects r in sb) { Subject_ComboBox.Items.Add(r.Наименование_предмета); Subjects_ComboBox.Items.Add(r.Наименование_предмета); }
+                foreach (Subjects r in sb) { Subject_ComboBox.Items.Add(r.Наименование_предмета); Subjects_ComboBox.Items.Add(r.Наименование_предмета); }
                 inactivesub_Click(null, null);
                 if (tc.FirstOrDefault() != null)
                     currentGroupTeacher = tc.FirstOrDefault();

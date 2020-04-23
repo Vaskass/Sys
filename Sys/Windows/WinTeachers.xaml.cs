@@ -127,5 +127,14 @@ namespace Sys.Windows
         {
             new WinReport(1, currentUser).Show();
         }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            using (SysItems db = new SysItems())
+            {
+                var gr = db.Groups.Where(r => r.ID_Пользователя==currentUser.ID_Пользователя);
+                if (gr.FirstOrDefault() == null) { WinReportButton.Visibility = Visibility.Hidden; }
+            }
+        }
     }
 }

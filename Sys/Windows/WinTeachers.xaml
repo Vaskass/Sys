@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Sys.Windows"
         mc:Ignorable="d"
         Title="Фамилия имя отчество препода" Height="330
-        " Width="500">
+        " Width="500" Initialized="Window_Initialized">
     <Grid>
         <StackPanel  Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label Content="Выберите предмет:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
