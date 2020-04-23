@@ -43,8 +43,6 @@ namespace Sys.Windows
     }
     public partial class WinStudents : Window
     {
- 
-
         DispatcherTimer timer = new DispatcherTimer();
         Users currentUser;
         Subjects currentSubject;
@@ -68,9 +66,6 @@ namespace Sys.Windows
 
             timer.Tick += new EventHandler(timer_Tick);
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-
-
-            
         }
 
         private void timer_Tick(object sender, EventArgs e)
