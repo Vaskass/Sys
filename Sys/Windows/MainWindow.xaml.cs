@@ -64,7 +64,7 @@ namespace Sys
             SI.Users.Load();
             Login.Items.Clear();
 
-            foreach (Users u in SI.Users)
+            foreach (Users u in SI.Users.Where(p=> p.Статус==true))
             {
                 Login.Items.Add(u.Логин);
             }
