@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Название группы" Height="450" Width="860" SizeChanged="Window_SizeChanged">
     <Grid >
-        <DataGrid Initialized="Grid_Initialized" x:Name="StudTable" Margin="0,0,0,40"  LoadingRow="StudTable_LoadingRow" MinRowHeight="35">
+        <DataGrid Initialized="Grid_Initialized" x:Name="StudTable" Margin="0,0,0,40"  LoadingRow="StudTable_LoadingRow" MinRowHeight="3">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
                     <Setter Property="Background" Value="White"/>
