@@ -385,7 +385,7 @@ namespace Sys.Windows
                 var Src = SI.Enabled_Subjects.Where(p => p.ID_Группы == selectedGroupID && p.ID_Предмета == selectedSubjectID && p.ID_Пользователя == selectedUserID);
                 if (Src.Any())
                 {
-                    MessageBox.Show("Предмет " + subjectsList[subjectBox.SelectedIndex].Наименование_предмета + " у группы " + groupsList[groupBox.SelectedIndex].Название_группы + " уже есть у предодователя " + usersList[usersBox.SelectedIndex].Логин);
+                    MessageBox.Show("Предмет " + subjectsList[subjectBox.SelectedIndex].Наименование_предмета + " у группы " + groupsList[groupBox.SelectedIndex].Название_группы + " уже есть у преподователя " + usersList[usersBox.SelectedIndex].Логин);
                 }
                 else
                 {
